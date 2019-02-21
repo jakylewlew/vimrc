@@ -68,15 +68,25 @@ endfunction
 
 function! InsertItem()
 	exe "normal" "i\\begin{itemize}\<CR>\<CR>\\end{itemize}"
-	exe "normal" "ki\\item"
+	exe "normal" "ki\\item "
+	startinsert
 endfunction
+function! InsertEnumerate()
+	exe "normal" "i\\begin{enumerate}\<CR>\<CR>\\end{enumerate}"
+	exe "normal" "ki\\item "
+	startinsert	
+endfunction
+
 
 function! InsertVerbatim()
      exe "normal" "i\\begin{verbatim}\<CR>\CR>\\end{verbatim}\<Esc>"
      exe "normal" "ki"
+	 startinsert	
+	
 endfunction
 function! CreateSubsection()
 	exe "normal" "i\\subsection{}"
+	startinsert
 endfunction
 function! InsertTime()
 	put	=strftime('%T')
@@ -95,3 +105,7 @@ nnoremap <Leader>t : call InsertTime() <CR>
 
 nnoremap <Leader>c : call CompileLatex() <CR>
 
+nnoremap <Leader>n :call InsertEnumerate() <CR>
+
+autocmd InsertEnter * set cul
+autocmd InsertLeave * set nocul
